@@ -107,7 +107,7 @@ function endGame() {
 }
 
 function changeColor(colorName) {
-  const colors = { purple: '#9A68EB', red: '#FB8484', green: '#93E8AA' }
+  const colors = { purple: '#9A68EB', red: '#F93434', green: '#93E8AA' }
   const root = document.documentElement
   root.style.setProperty('--color', colors[colorName])
 }
