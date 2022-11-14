@@ -57,7 +57,9 @@ class Timer {
   }
 }
 
-const state = { waitingForClick: false, timer: new Timer() }
+const state = { waitingForClick: false, timer: new Timer(), waitTimeout: null }
+const MAX_WAIT_TIME = 3500
+const MIN_WAIT_TIME = 1500
 const buttonTitle = document.getElementById('button-title')
 const buttonSub = document.getElementById('button-sub')
 
@@ -67,11 +69,11 @@ function connect() {
   button.addEventListener('mousedown', handleClick)
 }
 
-function handleClick(event) {
-  if (state.waitingForClick) {
-    endGame()
-  } else {
+function handleClick(_event) {
+  if (!state.waitingForClick) {
     startGame()
+  } else {
+    endGame()
   }
 }
 
@@ -82,18 +84,17 @@ function startGame() {
   changeColor('red')
   buttonTitle.textContent = 'wait for green'
   buttonSub.textContent = ''
-  const wait = Math.floor(Math.random() * 3500) + 1500
-  window.setTimeout(() => {
-    if (state.waitingForClick === true) {
-      state.timer.start()
-      console.log('timer started', state.timer.getTime())
-      changeColor('green')
-    }
+  const wait = Math.floor(Math.random() * MAX_WAIT_TIME) + MIN_WAIT_TIME
+  state.waitTimeout = window.setTimeout(() => {
+    state.timer.start()
+    console.log('timer started', state.timer.getTime())
+    changeColor('green')
   }, wait)
 }
 
 function endGame() {
   state.timer.stop()
+  window.clearTimeout(state.waitTimeout)
   console.log('timer stopped', state.timer.getTime())
   state.waitingForClick = false
   changeColor('purple')
