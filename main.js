@@ -66,10 +66,15 @@ const buttonSub = document.getElementById('button-sub')
 function connect() {
   const button = document.getElementById('button')
 
-  button.addEventListener('mousedown', handleClick)
+  button.addEventListener('mousedown', handlePlay)
+  document.body.onkeydown = function (event) {
+    if (event.key == ' ' || event.code == 'Space' || event.key == 'Enter') {
+      handlePlay()
+    }
+  }
 }
 
-function handleClick(_event) {
+function handlePlay(_event) {
   if (!state.waitingForClick) {
     startGame()
   } else {
