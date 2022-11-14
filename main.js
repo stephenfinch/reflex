@@ -64,7 +64,7 @@ const buttonSub = document.getElementById('button-sub')
 function connect() {
   const button = document.getElementById('button')
 
-  button.addEventListener('click', handleClick)
+  button.addEventListener('mousedown', handleClick)
 }
 
 function handleClick(event) {
@@ -107,7 +107,7 @@ function endGame() {
 }
 
 function changeColor(colorName) {
-  const colors = { purple: '#9A68EB', red: '#F93434', green: '#93E8AA' }
+  const colors = { purple: '#9A68F5', red: '#F93434', green: '#3BD359' }
   const root = document.documentElement
   root.style.setProperty('--color', colors[colorName])
 }
