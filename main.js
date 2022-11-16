@@ -60,6 +60,7 @@ class Timer {
 const state = { waitingForClick: false, timer: new Timer(), waitTimeout: null }
 const MAX_WAIT_TIME = 3500
 const MIN_WAIT_TIME = 1500
+const showBestScore = document.getElementById('best-score')
 const buttonTitle = document.getElementById('button-title')
 const buttonSub = document.getElementById('button-sub')
 
@@ -71,6 +72,10 @@ function connect() {
     if (event.key == ' ' || event.code == 'Space' || event.key == 'Enter') {
       handlePlay()
     }
+  }
+
+  if (localStorage.getItem('bestScore')) {
+    showBestScore.textContent = `Best Score: ${localStorage.getItem('bestScore')}`
   }
 }
 
@@ -105,7 +110,10 @@ function endGame() {
   changeColor('purple')
   const score = state.timer.getTime()
   if (score > 0) {
-    buttonTitle.textContent = state.timer.getTime()
+    const newBestScore = Math.min(score, localStorage.getItem('bestScore') || 9999)
+    localStorage.setItem('bestScore', newBestScore)
+    showBestScore.textContent = `Best Score: ${localStorage.getItem('bestScore')}`
+    buttonTitle.textContent = score
   } else {
     buttonTitle.textContent = 'slow down'
   }
